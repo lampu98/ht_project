@@ -2,6 +2,7 @@ from bs4 import BeautifulSoup
 import requests
 import re
 import csv
+import pandas as pd
 
 def take_url():
     lista_finale_url = list()
@@ -22,4 +23,5 @@ def take_url():
     return final_list
 
 list_url=take_url()
-print(len(list_url))
+
+df = pd.DataFrame(list_url)
