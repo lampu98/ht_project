@@ -27,3 +27,12 @@ six>=1.14
 joblib
 memoized-property
 termcolor
+
+#scraping
+selenium
+bs4
+chromedriver-binary==96.0.4664.45.0
+
+#nlp
+nltk
+spacy
