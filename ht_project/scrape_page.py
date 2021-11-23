@@ -6,6 +6,8 @@ import pandas as pd
 path = "raw_data/index_url.csv"
 df=pd.read_csv(path)
 
+df_scrape = pd.DataFrame(index=["text", "departure", "arrival", "theme"])
+
 
 def scrape():
     get_features=list()
@@ -27,4 +29,7 @@ def scrape():
 
 
 scrape_page = scrape()
-print(scrape_page[0])
+
+
+
+df.to_csv("page_scraping.csv")
