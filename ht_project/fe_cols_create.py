@@ -8,6 +8,8 @@ from ht_project import nlp_utils
 TERMS_JSON = '../age_dicts.json'
 TEXT_FILENAME = 'INSERT_CSV.csv'
 
+#TO DO: should output ones and zeros instead of matches
+
 df = pd.read_csv(TEXT_FILENAME, delimiter = ',' , encoding = 'unicode_escape')
 
 df['text'] = df['text'].astype('str')
