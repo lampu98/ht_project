@@ -5,8 +5,8 @@ import pandas as pd
 
 from ht_project import nlp_utils
 
-TERMS_JSON = '../age_dicts.json'
-TEXT_FILENAME = 'INSERT_CSV.csv'
+TERMS_JSON = 'data/fe_dicts.json'
+TEXT_FILENAME = 'raw_data/final_datframe.csv'
 
 #TO DO: should output ones and zeros instead of matches
 
