@@ -4,6 +4,7 @@ import re
 import csv
 import pandas as pd
 
+
 def take_url():
     all_url_list = list()
     for i in range(1, 69):
