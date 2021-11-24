@@ -11,24 +11,36 @@ df=pd.read_csv(path)
 
 
 def scrape():
+    df_country = pd.read_csv(
+        "/Users/fenice/code/QZKZ3/ht_project/raw_data/countries of the world.csv"
+    )["Country"]
+    country=list(df_country)
+    country.append("North Korea")
+    country.append("Sri Lank")
+    country.append("Sri Lanka")
+
+    themes = [
+        "Sexual exploitation", "Children", "Forced labour", "Domestic slavery",
+        "Forced marriage", "Trafficking", "Debt bondage", "War slavery",
+        "Armed conflict", "Women", "Prison labour", "Migration", "Emancipation"
+    ]
+
     with open('/Users/fenice/code/QZKZ3/ht_project/try.csv',
             'a',
             encoding='UTF8',
             newline='') as f:
-        for i in range(1358):
+        for i in [28,  36, 125, 526, 527, 528, 530, 902, 912, 913, 914, 915, 917,918, 919, 920, 921, 973]:
+
             print(i)
-            time.sleep(2)
             link = df.loc[i].url
             response = requests.get(link)
             html = response.text
             soup = BeautifulSoup(html, features="html.parser")
 
-            take = soup.find("dd", {"class": "item-meta__value"}).text
-
             text = []
-            for element in soup.find("div", class_="text-item-body no-select").find_all("p"):
-                text.append(element.text)
-            final_text=' '.join(text)
+            for element in soup.find_all("div", class_="text-item-body no-select"):
+                text.append(element.text.strip())
+            final_text=' '.join(text).replace("\xa0"," ")
 
             try:
                 for item in soup.find_all("div", class_= "item-title"):
@@ -38,39 +50,51 @@ def scrape():
                 name=np.nan
                 narrative_year=np.nan
 
-            try:
-                countries = re.findall("\n..(.*)", take)[0]
-            except:
-                pass
-
-            try:
-                departure = re.findall("(.*).slavery location", countries)[0].strip()
-            except:
-                departure= np.nan
-
-            try:
-                arrival = re.findall("slavery location.*?(\w.*) .trafficked from",
-                            countries)[0]
-            except:
-                arrival= np.nan
-
-            inline_item_str= str(soup.find_all("li", {"class": "inline-meta__item"}))
-            summ=len(re.findall("slavery location",inline_item_str))+len(re.findall("trafficked from",inline_item_str))
-
             inline_item = soup.find_all("li", {"class": "inline-meta__item"})
 
-            if summ==0:
-                theme = (inline_item[0].text).strip()
-            elif summ==1:
-                theme = (inline_item[1].text).strip()
-            elif summ==2:
-                theme = (inline_item[2].text).strip()
-            elif summ==3:
-                theme = (inline_item[3].text).strip()
-            elif summ==4:
-                theme = (inline_item[3].text).strip()
+            all_items=[i.text.strip() for i in inline_item]
+
+            countries=list()
+            for i in all_items:
+                for x in country:
+                    if re.findall(x,i):
+                        countries.append(x)
+            len_countries=len(countries)
+
+            if len_countries == 0:
+                arrival= np.nan
+                departure = np.nan
+            elif len_countries == 1:
+                arrival= countries[0]
+            elif len_countries == 2:
+                arrival = countries[0]
+                departure = countries[1]
+            elif len_countries == 3:
+                arrival = [countries[0],countries[1]]
+                departure = countries[2]
+            elif len_countries == 4:
+                arrival = [countries[0], countries[1], countries[2]]
+                departure = countries[3]
             else:
-                theme = (inline_item[5].text).strip()
+                arrival = "Too much countries"
+                departure = "Too much countries"
+
+            themes_final = list()
+            for i in all_items:
+                for x in themes:
+                    if re.findall(x, i):
+                        themes_final.append(x)
+            sum_themes = len(themes_final)
+
+
+            if sum_themes == 0:
+                theme= np.nan
+            elif sum_themes == 1:
+                theme= themes_final[0]
+            elif sum_themes == 2:
+                theme = [themes_final[0],themes_final[1]]
+            else:
+                theme="too much themes"
 
             try:
                 maplocation = re.findall("mapLocation = .(.*).,",
@@ -87,7 +111,6 @@ def scrape():
                 date_slavery=np.nan
 
             dictionary = {
-                "index":i,
                 "text": final_text,
                 "name": name,
                 "year": narrative_year,
@@ -100,7 +123,7 @@ def scrape():
             }
 
             fieldnames= [
-                "index","text","name",
+                "text","name",
                 "year", "departure", "arrival", "theme", "latitude", "longitude",
                 "date_slavery"
             ]
