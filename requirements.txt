@@ -36,3 +36,7 @@ chromedriver-binary==96.0.4664.45.0
 #nlp
 nltk
 spacy
+
+#data vis
+seaborn
+plotly
