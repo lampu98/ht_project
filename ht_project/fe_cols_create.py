@@ -6,7 +6,7 @@ import pandas as pd
 from ht_project import nlp_utils
 
 TERMS_JSON = 'data/fe_dicts.json'
-TEXT_FILENAME = 'raw_data/final_datframe.csv'
+TEXT_FILENAME = 'raw_data/final_dataframe.csv'
 
 #TO DO: should output ones and zeros instead of matches
 
