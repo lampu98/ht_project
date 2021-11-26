@@ -15,3 +15,17 @@ setup(name='ht_project',
       include_package_data=True,
       scripts=['scripts/ht_project-run'],
       zip_safe=False)
+
+#Heroku and streamlit
+
+mkdir -p ~/.streamlit/
+echo "
+[general]n
+email = "your-email@domain.com"n
+" > ~/.streamlit/credentials.toml
+echo "
+[server]n
+headless = truen
+enableCORS=falsen
+port = $PORTn
+" > ~/.streamlit/config.toml
