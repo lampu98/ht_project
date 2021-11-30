@@ -3,7 +3,8 @@ import streamlit as st
 import numpy as np
 import pandas as pd
 
-import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
 import plotly.express as px
 
 all_departure = [
@@ -67,14 +68,14 @@ arrival_or_departure = col1.radio('Select country of', ('Origin', 'Destination')
 if arrival_or_departure == 'Destination':
     option_arrival = col2.selectbox('', all_arrival)
     if option_arrival == "Select all":
-        df = pd.DataFrame(df[["departure", "alpha_3"]])
+        df_selected = pd.DataFrame(df[["departure", "alpha_3"]])
     else:
-        df = pd.DataFrame(df[["departure",
-                              "alpha_3"]][df["arrival_1"] == option_arrival])
+        df_selected = pd.DataFrame(df[["departure", "alpha_3"
+                                       ]][df["arrival_1"] == option_arrival])
 
     data_map = pd.DataFrame(
-        df.groupby(["departure",
-                    "alpha_3"])["alpha_3"].agg(Victims="count")).reset_index()
+        df_selected.groupby(["departure", "alpha_3"
+                             ])["alpha_3"].agg(Victims="count")).reset_index()
 
     fig = px.choropleth(data_map,
                         locations="alpha_3",
@@ -87,14 +88,13 @@ if arrival_or_departure == 'Destination':
 elif arrival_or_departure == 'Origin':
     option_departure = col2.selectbox('', all_departure)
     if option_departure == "Select all":
-        df = pd.DataFrame(df[["arrival_1",
-                            "alpha_3"]])
+        df_selected = pd.DataFrame(df[["arrival_1", "alpha_3"]])
     else:
-        df=pd.DataFrame(df[["arrival_1","alpha_3"]][df["departure"] == option_departure])
+        df_selected=pd.DataFrame(df[["arrival_1","alpha_3"]][df["departure"] == option_departure])
 
     data_map = pd.DataFrame(
-        df.groupby(["arrival_1",
-                    "alpha_3"])["alpha_3"].agg(Victims="count")).reset_index()
+        df_selected.groupby(["arrival_1", "alpha_3"
+                             ])["alpha_3"].agg(Victims="count")).reset_index()
 
     fig = px.choropleth(data_map,
                         locations="alpha_3",
@@ -103,3 +103,39 @@ elif arrival_or_departure == 'Origin':
                         color_continuous_scale='Viridis_r')
     fig.update_layout(title_text="Human Traffick countries of Destination")
     st.plotly_chart(fig)
+
+
+
+
+#Second graph
+
+all_age = [
+    '0-8', '9-17', '18-20', '21-23', '24-26', '27-29', '30-38', '39-47', '48+'
+]
+
+col3, col4 = st.columns(2)
+
+male_or_female = col3.radio('Select gender',
+                                  ('male', 'female'))
+option_age = col4.selectbox('Age', all_age)
+
+
+scraped_data_only = df[0:1358]
+moc_scraped = scraped_data_only.iloc[:, 9:26]
+moc_scraped_data = pd.DataFrame(moc_scraped.sum(), columns=['sum'])
+
+
+
+gen = df[df["gender"] == male_or_female].reset_index()
+age_broad = gen[gen['ageBroad'] == option_age].reset_index()
+MoC_data_bar = age_broad[(age_broad.meansOfControlConcatenated.notna())].\
+meansOfControlConcatenated.apply(lambda x: pd.value_counts(str(x).split(";"))).sum(axis = 0)
+
+means_of_control_top = MoC_data_bar.sort_values(ascending=False).head()
+try:
+    means_of_control_top.drop(labels="Not specified", inplace=True)
+except:
+    pass
+fig = plt.figure(figsize=(20, 7))
+ax = sns.barplot(means_of_control_top.index, means_of_control_top.values)
+st.pyplot(fig)
