@@ -121,8 +121,8 @@ fig = px.choropleth(data_map,
                     color="Victims",
                     hover_name="country",
                     color_continuous_scale="Viridis_r",
-                    width=1800,
-                    height=1400)
+                    width=600,
+                    height=440)
 
 fig.update_layout(title_text="Victim location from web scraping")
 
