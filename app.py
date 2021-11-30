@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import plotly.express as px
 import re
-from PIL import Image
+
 
 #st.set_page_config(layout="centered")
 
@@ -215,11 +215,9 @@ fig = px.histogram(graph, x="Traffic type", y = "count")
 st.plotly_chart(fig)
 
 #ngrams (sixth graph)
-ngram_1 = Image.open("img_1.png")
+#ngram_1 = Image.open("img_1.png")
 #ngram_2 = pd.read_csv('gs://websitehumantrafficking/img_2.png')
 #ngram_3 = pd.read_csv('gs://websitehumantrafficking/img_3.png')
 #ngram_4 = pd.read_csv('gs://websitehumantrafficking/img_4.png')
 #ngram_5 = pd.read_csv('gs://websitehumantrafficking/img_5.png')
 #ngram_6 = pd.read_csv('gs://websitehumantrafficking/img_6.png')
-
-st.image(ngram_1)
