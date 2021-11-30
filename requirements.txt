@@ -43,3 +43,5 @@ spacy
 #data vis
 seaborn
 plotly
+wordcloud
+PIL
