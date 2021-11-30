@@ -44,4 +44,4 @@ spacy
 seaborn
 plotly
 wordcloud
-matplotlib.pyplot
+matplotlib
