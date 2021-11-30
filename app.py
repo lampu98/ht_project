@@ -8,6 +8,9 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import plotly.express as px
 import re
+from PIL import Image
+
+#st.set_page_config(layout="centered")
 
 all_departure = [
     'Select all','Vietnam', 'Sri Lanka', 'Mexico', 'Sudan', 'Cameroon', 'United States',
@@ -107,9 +110,45 @@ elif arrival_or_departure == 'Origin':
     st.plotly_chart(fig)
 
 
+#second graph
+
+data_map = pd.read_csv(
+    'gs://websitehumantrafficking/data_map.csv')
 
 
-#Second graph
+fig = px.choropleth(data_map,
+                    locations="alpha_3",
+                    color="Victims",
+                    hover_name="country",
+                    color_continuous_scale="Viridis_r",
+                    width=1800,
+                    height=1400)
+
+fig.update_layout(title_text="Victim location from web scraping")
+
+st.plotly_chart(fig)
+
+
+#third graph
+extracted_locations = pd.read_csv(
+    'gs://websitehumantrafficking/extracted_locations.csv')
+loc_data = extracted_locations['location'].value_counts().reset_index()
+loc_data.rename(columns={
+    'index': 'location',
+    'location': 'count'
+},
+                inplace=True)
+graph = loc_data.sort_values(by='count', ascending=False)
+graphh = graph[graph["count"] > graph["count"].median()]
+fig = px.bar(graph,
+             x='location',
+             y='count',
+             hover_data=['location', 'count'],
+             color='location')
+st.plotly_chart(fig)
+
+
+#fourth graph
 
 all_age = [
     '0-8', '9-17', '18-20', '21-23', '24-26', '27-29', '30-38', '39-47', '48+'
@@ -147,7 +186,7 @@ fig = px.histogram(means_of_control_top, x="Means of control", y="")
 st.plotly_chart(fig)
 
 
-#third graph
+#fifth graph
 col5, col6 = st.columns(2)
 
 all_age_third_graph = [
@@ -175,4 +214,12 @@ graph.rename(columns = {"index": "Traffic type"}, inplace = True )
 fig = px.histogram(graph, x="Traffic type", y = "count")
 st.plotly_chart(fig)
 
-#forth graph
+#ngrams (sixth graph)
+ngram_1 = Image.open("img_1.png")
+#ngram_2 = pd.read_csv('gs://websitehumantrafficking/img_2.png')
+#ngram_3 = pd.read_csv('gs://websitehumantrafficking/img_3.png')
+#ngram_4 = pd.read_csv('gs://websitehumantrafficking/img_4.png')
+#ngram_5 = pd.read_csv('gs://websitehumantrafficking/img_5.png')
+#ngram_6 = pd.read_csv('gs://websitehumantrafficking/img_6.png')
+
+st.image(ngram_1)
