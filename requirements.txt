@@ -45,3 +45,4 @@ seaborn
 plotly
 wordcloud
 PIL
+matplotlib
