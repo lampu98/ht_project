@@ -1,3 +1,4 @@
+from numpy.core.fromnumeric import mean
 import streamlit as st
 
 import numpy as np
@@ -6,6 +7,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 import plotly.express as px
+import re
 
 all_departure = [
     'Select all','Vietnam', 'Sri Lanka', 'Mexico', 'Sudan', 'Cameroon', 'United States',
@@ -136,6 +138,41 @@ try:
     means_of_control_top.drop(labels="Not specified", inplace=True)
 except:
     pass
-fig = plt.figure(figsize=(20, 7))
-ax = sns.barplot(means_of_control_top.index, means_of_control_top.values)
-st.pyplot(fig)
+
+
+means_of_control_top = means_of_control_top.reset_index()
+means_of_control_top.rename(columns={"index": "Means of control",0:""}, inplace=True)
+
+fig = px.histogram(means_of_control_top, x="Means of control", y="")
+st.plotly_chart(fig)
+
+
+#third graph
+col5, col6 = st.columns(2)
+
+all_age_third_graph = [
+    '0-8', '9-17', '18-20', '21-23', '27-29', '24-26', '30-38', '39-47', '48+'
+]
+
+male_or_female_third_graph = col5.radio('Select gender', ('female', 'male'))
+option_age_third_graph = col6.selectbox('Age', all_age_third_graph)
+
+df_third_graph=df[df["gender"]==male_or_female_third_graph]
+df_third_graph=df[df["ageBroad"]==option_age_third_graph]
+
+HT_type1 = df_third_graph.filter(regex=("traf_type.*"))
+HT_type2 = df_third_graph.filter(regex=("^is.*"))
+HT_type = pd.concat([HT_type1, HT_type2], axis=1, join="outer")
+HT_type.drop(columns = "traf_type_illegaladoption")
+HT_type = HT_type.rename (columns = {"isSexualExploit": "Sexual", "isForcedLabour":"Forced labour", "isSexAndLabour": "Sex and labour", "isAbduction": "Abduction", "isSlaveryAndPractices": "Slavery and practices", "traf_type_domestic": "Domestic", "isForcedMarriage": "Forced marriage", "traf_type_cmarriage":"Forced marriage","traf_type_child":"Child abuse", "traf_type_fcriminality": "Forced criminality", "isForcedMilitary": "Forced military", "isOrganRemoval": "Organ removal", "traf_type_fpregnancy": "Forced pregnancy"} )
+HT_type.drop(columns = ["traf_type_illegaladoption","isOtherExploit"], inplace = True)
+HT_type_count = pd.DataFrame(HT_type.sum(), columns=["count"])
+graph=HT_type_count.sort_values(by="count", ascending=False)
+graph=graph.reset_index()
+graph=graph[graph["count"]>graph["count"].median()]
+graph.rename(columns = {"index": "Traffic type"}, inplace = True )
+
+fig = px.histogram(graph, x="Traffic type", y = "count")
+st.plotly_chart(fig)
+
+#forth graph
