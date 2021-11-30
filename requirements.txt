@@ -20,7 +20,6 @@ yapf
 gcsfs
 google-cloud-storage
 mlflow
-s3fse
 fastapi
 uvicorn
 streamlit
