@@ -12,7 +12,7 @@ import joblib
 
 
 #st.set_page_config(layout="centered")
-st.set_page_config(page_title="Human Trafficking", page_icon="🖖")
+#st.set_page_config(page_title="Human Trafficking", page_icon="🖖")
 
 all_departure = ["Select all",'Afghanistan', 'Albania', 'Armenia', 'Azerbaijan', 'Bangladesh', 'Belarus', 'Belgium', 'Benin', 'Bolivia, Plurinational State of', 'Brazil', 'Bulgaria',
                  'Burkina Faso', 'Burma', 'Burundi', 'Cambodia', 'Cameroon', 'Canada', 'Chad', 'China', 'Colombia', 'Congo, The Democratic Republic of the', 'Croatia', 'Cuba', 'Czech Republic',
@@ -33,7 +33,6 @@ all_arrival = [
     'Spain', 'Sudan', 'Sweden', 'Syria', 'Syrian Arab Republic', 'Taiwan', 'Taiwan, Province of China', 'Tajikistan', 'Tanzania', 'Tanzania, United Republic of',
     'Thailand', 'Trinidad and Tobago', 'Tunisia', 'Turkey', 'Turkmenistan', 'Uganda', 'Ukraine', 'United Arab Emirates', 'United Kingdom', 'United States',
     'Uzbekistan', 'Vanuatu', 'Venezuela', 'Viet Nam', 'Vietnam', 'Yemen', 'Zimbabwe']
-
 
 st.markdown("""#   What's in a survivor story?
 """)
