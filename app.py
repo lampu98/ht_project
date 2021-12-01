@@ -12,6 +12,7 @@ import joblib
 
 
 #st.set_page_config(layout="centered")
+st.set_page_config(page_title="Human Trafficking", page_icon="🖖")
 
 all_departure = ["Select all",'Afghanistan', 'Albania', 'Armenia', 'Azerbaijan', 'Bangladesh', 'Belarus', 'Belgium', 'Benin', 'Bolivia, Plurinational State of', 'Brazil', 'Bulgaria',
                  'Burkina Faso', 'Burma', 'Burundi', 'Cambodia', 'Cameroon', 'Canada', 'Chad', 'China', 'Colombia', 'Congo, The Democratic Republic of the', 'Croatia', 'Cuba', 'Czech Republic',
@@ -346,7 +347,7 @@ age_model_X=[
     '9-17', '0-8', '18-20', '21-23', '24-26', '27-29', '30-38', '39-47', '48+'
 ]
 
-st.markdown("### Is Sexual Exploited?")
+st.markdown("### Has the victim been subject to forced labour?")
 
 gender_model_column_1,departure_model_column_1,age_model_column_1=st.columns(3)
 
@@ -360,13 +361,13 @@ my_X = [
     age_selection_model_1
 ]
 
-model_sexualexploit = joblib.load('test_IsSexualExploit.joblib')
-prediction=model_sexualexploit.predict([my_X])[0]
+model_ForcedLabour = joblib.load('test_IsForcedLabour.joblib')
+prediction = model_ForcedLabour.predict([my_X])[0]
 
 if prediction==0:
-    st.markdown("#### We conjecture that is not Sexual Exploited")
+    st.markdown("#### We conjecture that is not subject to forced labour")
 else:
-    st.markdown("#### We conjecture that is Sexual Exploited")
+    st.markdown("#### We conjecture that is subject to forced labour")
 
 
 st.markdown("#")
@@ -399,7 +400,7 @@ st.write("##")
 
 column_img_3, column_desc_3 = st.columns(2)
 column_img_3.image(
-    "https://res.cloudinary.com/julioeq29/image/upload/v1638295006/img_2.png")
+    "https://res.cloudinary.com/julioeq29/image/upload/v1638295006/img_4.png")
 column_desc_3.markdown("""### DistilBERT (generated around the theme of conflict)
 ##### We found the testimonies of several Eritreans who had attempted to flee conflict via Sudan and Egypt in an attempt to reach Israel where they planned to seek asylum. These people had been kidnapped on their journey - either in Sudan or in Egypt - and exploited before they could reach safety."""
                        )
