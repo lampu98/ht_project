@@ -8,6 +8,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import plotly.express as px
 import re
+import joblib
 
 
 #st.set_page_config(layout="centered")
@@ -325,6 +326,50 @@ cm = sns.light_palette("red", as_cmap=True)
 
 st.write(fig.style.background_gradient(cmap=cm))
 
+st.markdown("#")
+st.markdown("#")
+st.markdown("#")
+st.markdown("#")
+st.markdown("#")
+#ninth grapgh (model)
+
+gender_X_model=["female","male"]
+departure_X_model=['Afghanistan', 'Albania', 'Armenia', 'Azerbaijan', 'Bangladesh', 'Belarus', 'Belgium', 'Benin', 'Bolivia, Plurinational State of', 'Brazil', 'Bulgaria',
+                 'Burkina Faso', 'Burma', 'Burundi', 'Cambodia', 'Cameroon', 'Canada', 'Chad', 'China', 'Colombia', 'Congo, The Democratic Republic of the', 'Croatia', 'Cuba', 'Czech Republic',
+                 "Côte d'Ivoire", 'Dominican Republic', 'Ecuador', 'Egypt', 'El Salvador', 'Eritrea', 'Ethiopia', 'Fiji', 'Germany', 'Ghana', 'Guatemala', 'Guinea', 'Guinea-Bissau', 'Haiti',
+                 'Honduras', 'Hungary', 'India', 'Indonesia', 'Iraq', 'Ireland', 'Israel', 'Jamaica', 'Kazakhstan', 'Kenya', 'Korea, Republic of', 'Kyrgyzstan', "Lao People's Democratic Republic",
+                 'Laos', 'Lesotho', 'Libya', 'Lithuania', 'Madagascar', 'Malawi', 'Malaysia', 'Mali', 'Mauritania', 'Mexico', 'Micronesia, Federated States of', 'Moldova', 'Moldova, Republic of',
+                 'Mongolia', 'Myanmar', 'Nepal', 'Niger', 'Nigeria', 'North Korea', 'Pakistan', 'Peru', 'Philippines', 'Poland', 'Qatar', 'Romania', 'Russia', 'Russian Federation', 'Rwanda', 'Senegal',
+                 'Sierra Leone', 'Slovakia', 'Slovenia', 'Somalia', 'South Africa', 'Spain', 'Sri Lanka', 'Sudan', 'Sweden', 'Syria', 'Tajikistan', 'Tanzania', 'Thailand', 'Togo', 'Too much countries',
+                 'Tunisia', 'Turkey', 'Turkmenistan', 'Uganda', 'Ukraine', 'United Arab Emirates', 'United Kingdom', 'United States', 'Uzbekistan', 'Venezuela', 'Viet Nam', 'Vietnam', 'Yemen', 'Zambia', 'Zimbabwe']
+age_model_X=[
+    '9-17', '0-8', '18-20', '21-23', '24-26', '27-29', '30-38', '39-47', '48+'
+]
+
+st.markdown("### Is Sexual Exploited?")
+
+gender_model_column_1,departure_model_column_1,age_model_column_1=st.columns(3)
+
+gender_selection_model_1=gender_model_column_1.selectbox('Gender', gender_X_model)
+departure_selection_model_1=departure_model_column_1=departure_model_column_1.selectbox('Departure', departure_X_model)
+age_selection_model_1=age_model_column_1=age_model_column_1.selectbox('Age', age_model_X)
+
+my_X = [
+    gender_selection_model_1,
+    departure_selection_model_1,
+    age_selection_model_1
+]
+
+model_sexualexploit = joblib.load('test_IsSexualExploit.joblib')
+prediction=model_sexualexploit.predict([my_X])[0]
+
+if prediction==0:
+    st.markdown("#### We conjecture that is not Sexual Exploited")
+else:
+    st.markdown("#### We conjecture that is Sexual Exploited")
+
+
+st.markdown("#")
 st.markdown("#")
 st.markdown("#")
 st.markdown("#")
