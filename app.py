@@ -34,6 +34,7 @@ all_arrival = [
     'Thailand', 'Trinidad and Tobago', 'Tunisia', 'Turkey', 'Turkmenistan', 'Uganda', 'Ukraine', 'United Arab Emirates', 'United Kingdom', 'United States',
     'Uzbekistan', 'Vanuatu', 'Venezuela', 'Viet Nam', 'Vietnam', 'Yemen', 'Zimbabwe']
 
+
 st.markdown("""#   What's in a survivor story?
 """)
 
