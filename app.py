@@ -184,7 +184,6 @@ moc_scraped = scraped_data_only.iloc[:, 9:26]
 moc_scraped_data = pd.DataFrame(moc_scraped.sum(), columns=['sum'])
 
 
-
 gen = df[df["gender"] == male_or_female].reset_index()
 age_broad = gen[gen['ageBroad'] == option_age].reset_index()
 MoC_data_bar = age_broad[(age_broad.meansOfControlConcatenated.notna())].\
