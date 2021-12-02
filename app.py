@@ -39,11 +39,10 @@ st.markdown("""#   What's in a survivor story?
 """)
 
 st.markdown(
-    """### The data used in this website were obtained from more than 1,300 survivor testimonies published by the Nottingham Rights Lab, and from the CTDC dataset, which contains more than 90,000 records.
-#### By using NLP to extract key intelligence from survivor testimonies, and by combining this with existing datasets on human trafficking, this project aims to show that data science can:
+    """ #### By using NLP to extract key intelligence from survivor testimonies, and by combining this with existing datasets on human trafficking, this project aims to show that data science can:
  1. Enrich the currently sparse global picture of human trafficking by allowing the collection of data that would be too cumbersome/costly to collect manually
  2. Aid data interpretation, finding patterns that would perhaps be overlooked if assessed by humans alone
- 3. Encourage more organisations to share their data, even if it is ‘unorganised’,  by showing the richness of information that can be obtained from each survivor story, and highlighting the value of this information to disruption efforts
+ 3. Encourage more organisations to share their data, even if it is unstructured,  by showing the richness of information that can be obtained from each survivor story, and highlighting the value of this information to disruption efforts
     """
 )
 
@@ -75,7 +74,10 @@ if arrival_or_departure == 'Destination':
                         color="Victims",
                         hover_name="departure",
                         color_continuous_scale='Viridis_r')
-    fig.update_layout(title_text="Human Traffick countries of Origin")
+    fig.update_layout(
+        title_text=
+        "Countries of Origin based on web scraped metadata combined with CTDC data"
+    )
     st.plotly_chart(fig)
 
 elif arrival_or_departure == 'Origin':
@@ -94,7 +96,10 @@ elif arrival_or_departure == 'Origin':
                         color="Victims",
                         hover_name="arrival_1",
                         color_continuous_scale='Viridis_r')
-    fig.update_layout(title_text="Human Traffick countries of Destination")
+    fig.update_layout(
+        title_text=
+        "Countries of Destination based on web scraped metadata combined with CTDC data"
+    )
     st.plotly_chart(fig)
 
 
@@ -111,7 +116,10 @@ fig = px.choropleth(data_map,
                     color_continuous_scale="Viridis_r",
                     )
 
-fig.update_layout(title_text="Victim location from web scraping")
+fig.update_layout(
+    title_text=
+    "Map showing locations extracted from survivor testimonies using Named Entity Recognition"
+)
 
 st.plotly_chart(fig)
 
@@ -127,11 +135,18 @@ loc_data.rename(columns={
                 inplace=True)
 graph = loc_data.sort_values(by='count', ascending=False)
 graphh = graph[graph["count"] > graph["count"].median()]
+
+
 fig = px.bar(graph,
              x='location',
              y='count',
              hover_data=['location', 'count'],
              color='location')
+
+fig.update_layout(
+    title_text=
+    "Most commonly cited locations in the survivor testimonies, extracted with NER"
+)
 st.plotly_chart(fig)
 
 st.markdown("#")
@@ -153,9 +168,13 @@ all_age = [
     '0-8', '9-17', '18-20', '21-23', '24-26', '27-29', '30-38', '39-47', '48+'
 ]
 
+st.markdown("""
+            ##### Select age and gender of  victim the to see the main means of control used
+            """)
+
 col3, col4 = st.columns(2)
 
-male_or_female = col3.radio('Select gender',
+male_or_female = col3.radio('Gender',
                                   ('male', 'female'))
 option_age = col4.selectbox('Age', all_age)
 
@@ -190,13 +209,18 @@ st.plotly_chart(fig)
 st.markdown("#")
 st.markdown("#")
 #sixth graph
+
+st.markdown("""
+            ##### Select age and gender to see the most common exploitation types
+            """)
+
 col5, col6 = st.columns(2)
 
 all_age_third_graph = [
     '0-8', '9-17', '18-20', '21-23', '27-29', '24-26', '30-38', '39-47', '48+'
 ]
 
-male_or_female_third_graph = col5.radio('Select gender', ('female', 'male'))
+male_or_female_third_graph = col5.radio('Gender', ('female', 'male'))
 option_age_third_graph = col6.selectbox('Age', all_age_third_graph)
 
 df_third_graph=df[df["gender"]==male_or_female_third_graph]
@@ -212,12 +236,12 @@ HT_type_count = pd.DataFrame(HT_type.sum(), columns=["count"])
 graph=HT_type_count.sort_values(by="count", ascending=False)
 graph=graph.reset_index()
 graph=graph[graph["count"]>graph["count"].median()]
-graph.rename(columns = {"index": "Traffic type"}, inplace = True )
+graph.rename(columns = {"index": "Trafficking type"}, inplace = True )
 
 fig = px.bar(graph,
-             x="Traffic type",
+             x="Trafficking type",
              y = "count",
-             color="Traffic type")
+             color="Trafficking type")
 st.plotly_chart(fig)
 
 st.markdown("#")
@@ -247,6 +271,10 @@ all_destination_country = [
     'Uzbekistan', 'Vanuatu', 'Venezuela', 'Viet Nam', 'Vietnam', 'Yemen',
     'Zimbabwe'
 ]
+st.markdown("""
+            ##### Select a country to see the main industries of exploitation
+    """)
+
 
 option_destination_country = st.selectbox('Destination', all_destination_country)
 
@@ -282,16 +310,16 @@ if option_destination_country=="Select all":
     traf_industry_count = pd.DataFrame(traf_industry.sum(), columns=['count'])
     traf_industry_count.sort_values(by='count', ascending=False)
     traf_industry_count.reset_index(inplace=True)
-    traf_industry_count.rename(columns={'index': 'Traffic industry'},
+    traf_industry_count.rename(columns={'index': 'Trafficking industry'},
                                inplace=True)
     traf_graph = traf_industry_count.sort_values(by='count', ascending=False)
     traf_graph = traf_graph[traf_graph["count"] > traf_graph["count"].median()]
 
     fig = px.bar(traf_graph,
-                 x="Traffic industry",
+                 x="Trafficking industry",
                  y='count',
-                 hover_data=['Traffic industry', 'count'],
-                 color='Traffic industry')
+                 hover_data=['Trafficking industry', 'count'],
+                 color='Trafficking industry')
     st.plotly_chart(fig)
 
 else:
@@ -304,17 +332,25 @@ else:
     traf_industry_count = pd.DataFrame(traf_industry.sum(), columns=['count'])
     traf_industry_count.sort_values(by='count', ascending=False)
     traf_industry_count.reset_index(inplace = True)
-    traf_industry_count.rename (columns= {'index': 'Traffic industry'}, inplace = True)
+    traf_industry_count.rename(columns={'index': 'Trafficking industry'},
+                               inplace=True)
     traf_graph=traf_industry_count.sort_values(by='count', ascending=False)
     traf_graph=traf_graph[traf_graph["count"]>traf_graph["count"].median()]
 
-    fig = px.bar(traf_graph, x="Traffic industry", y = 'count',
-                hover_data=['Traffic industry', 'count'], color='Traffic industry')
+    fig = px.bar(traf_graph,
+                 x="Trafficking industry",
+                 y='count',
+                 hover_data=['Trafficking industry', 'count'],
+                 color='Trafficking industry')
     st.plotly_chart(fig)
 
 st.markdown("#")
 st.markdown("#")
 #eigth graph
+
+st.markdown("""
+            ##### Cases recorded in a given year in each country in the combined dataset
+    """)
 
 fig = pd.pivot_table(df,
                        values='Datasource',
@@ -347,7 +383,9 @@ age_model_X=[
     '9-17', '0-8', '18-20', '21-23', '24-26', '27-29', '30-38', '39-47', '48+'
 ]
 
-st.markdown("### Has the victim been subject to forced labour?")
+st.markdown(
+    "### Likelihood of a person of being subject to forced labour type based on age, gender and country of origin"
+)
 
 gender_model_column_1,departure_model_column_1,age_model_column_1=st.columns(3)
 
@@ -365,9 +403,13 @@ model_ForcedLabour = joblib.load('test_IsForcedLabour.joblib')
 prediction = model_ForcedLabour.predict([my_X])[0]
 
 if prediction==0:
-    st.markdown("#### We conjecture that is not subject to forced labour")
+    st.markdown(
+        "#### Based on your selection, it is unlikely that the person was subjected to labour exploitation"
+    )
 else:
-    st.markdown("#### We conjecture that is subject to forced labour")
+    st.markdown(
+        "#### Based on your selection, it is likely that the person was subjected to labour exploitation"
+    )
 
 
 st.markdown("#")
@@ -377,40 +419,34 @@ st.markdown("#")
 st.markdown("#")
 #ngrams (first img)
 
-column_img_1,column_desc_1=st.columns(2)
-column_img_1.image(
+st.markdown("## N-grams for analysis")
+
+st.image(
     "https://res.cloudinary.com/julioeq29/image/upload/v1638295006/img_2.png")
-column_desc_1.markdown("""## N-grams for analysis
-##### The wordcloud below shows a collection of phrases most commonly used by survivors in the scraped testimonies. Many of the phrases allude to the variety of ways in which a person can become trafficked - from false promises of a good job or an education, to threats and violence."""
-                       )
+
 st.write("##")
 st.write("##")
 #ngrams (second img)
 
-column_img_2, column_desc_2 = st.columns(2)
-column_desc_2.markdown("""## N-grams for analysis
-##### This wordcloud based on phrases used across multiple testimonies shows some of the harsh realities faced by human trafficking victims."""
-                       )
-column_img_2.image(
+
+st.image(
     "https://res.cloudinary.com/julioeq29/image/upload/v1638295006/img_3.png")
 
 st.write("##")
 st.write("##")
 #ngrams (third img)
+st.markdown("## DistilBERT")
 
-column_img_3, column_desc_3 = st.columns(2)
-column_img_3.image(
+st.image(
     "https://res.cloudinary.com/julioeq29/image/upload/v1638295006/img_4.png")
-column_desc_3.markdown("""### DistilBERT (generated around the theme of conflict)
-##### We found the testimonies of several Eritreans who had attempted to flee conflict via Sudan and Egypt in an attempt to reach Israel where they planned to seek asylum. These people had been kidnapped on their journey - either in Sudan or in Egypt - and exploited before they could reach safety."""
-                       )
+
 st.write("##")
 st.write("##")
 #ngrams (fourth img)
-
-column_img_4, column_desc_4 = st.columns(2)
-column_desc_4.markdown("""### DistilBERT (built around the concept of debt)
-##### Debt is a well known vulnerability for human trafficking. Through manual validation our team was able to see that debt is indeed highly prevalent in the testimonies of trafficking victims in India, with debt serving as the catalyst to, and means of entrapment in, exploitative work.""")
-
-column_img_4.image(
+st.image(
     "https://res.cloudinary.com/julioeq29/image/upload/v1638295007/img_5.png")
+
+st.write("##")
+st.markdown(
+    """#### The data used in this website were obtained from more than 1,300 survivor testimonies published by the Nottingham Rights Lab, and from the CTDC dataset, which contains more than 90,000 records.
+    """)
