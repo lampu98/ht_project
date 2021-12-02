@@ -46,13 +46,13 @@ st.markdown(
     """
 )
 
+
 st.markdown("#")
 st.markdown("#")
 
-df = pd.read_csv("gs://websitehumantrafficking/final_df.csv")
+df = pd.read_csv("gs://websitehumantrafficking/final_small_df.csv")
 
 col1, col2= st.columns(2)
-
 
 arrival_or_departure = col1.radio('Select country of', ('Origin', 'Destination'))
 
@@ -118,8 +118,8 @@ fig = px.choropleth(data_map,
 
 fig.update_layout(
     title_text=
-    "Map showing locations extracted from survivor testimonies using Named Entity Recognition"
-)
+    "Map showing locations extracted from survivor testimonies using Named Entity Recognition",
+    showlegend=False)
 
 st.plotly_chart(fig)
 
@@ -145,8 +145,8 @@ fig = px.bar(graph,
 
 fig.update_layout(
     title_text=
-    "Most commonly cited locations in the survivor testimonies, extracted with NER"
-)
+    "Most commonly cited locations in the survivor testimonies, extracted with NER",
+    showlegend=False)
 st.plotly_chart(fig)
 
 st.markdown("#")
@@ -159,6 +159,7 @@ fig = px.sunburst(gender_age_df[gender_age_df.ageBroad.notna()],
                   color='gender',
                   color_discrete_map={'female':'pink', 'male':'light blue'},
                   title='Gender and Age of Human Trafficking Victims')
+fig.update_layout(showlegend=False)
 st.plotly_chart(fig)
 st.markdown("#")
 
@@ -201,7 +202,9 @@ means_of_control_top.rename(columns={"index": "Means of control",0:""}, inplace=
 fig = px.bar(means_of_control_top,
              x="Means of control",
              y="",
-             color='Means of control')
+             color='Means of control'
+             )
+fig.update_layout(showlegend=False)
 st.plotly_chart(fig)
 
 st.markdown("#")
@@ -240,6 +243,7 @@ fig = px.bar(graph,
              x="Trafficking type",
              y = "count",
              color="Trafficking type")
+fig.update_layout(showlegend=False)
 st.plotly_chart(fig)
 
 st.markdown("#")
@@ -318,6 +322,7 @@ if option_destination_country=="Select all":
                  y='count',
                  hover_data=['Trafficking industry', 'count'],
                  color='Trafficking industry')
+    fig.update_layout(showlegend=False)
     st.plotly_chart(fig)
 
 else:
@@ -340,6 +345,7 @@ else:
                  y='count',
                  hover_data=['Trafficking industry', 'count'],
                  color='Trafficking industry')
+    fig.update_layout(showlegend=False)
     st.plotly_chart(fig)
 
 st.markdown("#")
