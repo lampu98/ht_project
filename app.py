@@ -178,7 +178,6 @@ try:
 except:
     pass
 
-
 means_of_control_top = means_of_control_top.reset_index()
 means_of_control_top.rename(columns={"index": "Means of control",0:""}, inplace=True)
 
