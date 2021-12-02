@@ -19,8 +19,6 @@ yapf
 # API
 gcsfs
 google-cloud-storage
-mlflow
-fastapi
 uvicorn
 streamlit
 
@@ -31,7 +29,6 @@ memoized-property
 termcolor
 
 #scraping
-selenium
 bs4
 chromedriver-binary==96.0.4664.45.0
 
