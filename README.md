@@ -1,5 +1,9 @@
 # NLP for Human Trafficking Mapping and Disruption
 
+You can view our presentation here --> https://docs.google.com/presentation/d/1WWLiV0iE-advk9ZEAcDBrD0R9LocBgOTsdivnpf_Hgw/edit#slide=id.gcb9a0b074_1_0
+
+You can view the website here --> https://share.streamlit.io/lampu98/ht_project/app.py
+
 ## Project aims
 
 1. Enrich the global picture
@@ -21,11 +25,9 @@ Two sources of Data:
 2. Counter Trafficking Data Collaborative (CTDC) 90,000+ anonymised case records
 
 
-## Website 
-You can view the website on this URL
-https://share.streamlit.io/lampu98/ht_project/app.py
 
-## Description of files
+
+## Description of files and of our process
 1. We did web scraping to grab the data - inside ht_project folder you can see two important files --> index_urls.py where we took every url of the pages and scrape_page.py where we grap the data that we want from every url
 2. The main file is app.py where is stored the streamlit website --> inside the website you can see multiple interactive graphs, a prediction made with RandomForestClassifier and at the end some n-grams 
 
