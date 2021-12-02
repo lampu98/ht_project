@@ -10,16 +10,16 @@ pandas
 scikit-learn
 
 # tests/linter
-black
-coverage
-flake8
+#black
+#coverage
+#flake8
 pytest
 yapf
 
 # API
 gcsfs
 google-cloud-storage
-uvicorn
+#uvicorn
 streamlit
 
 # utilities
@@ -39,5 +39,5 @@ spacy
 #data vis
 seaborn
 plotly
-wordcloud
+#wordcloud
 matplotlib
