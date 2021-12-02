@@ -8,6 +8,7 @@ wheel>=0.29
 numpy
 pandas
 scikit-learn
+#re
 
 # tests/linter
 #black
@@ -29,7 +30,8 @@ memoized-property
 termcolor
 
 #scraping
-bs4
+#selenium
+#bs4
 chromedriver-binary==96.0.4664.45.0
 
 #nlp
