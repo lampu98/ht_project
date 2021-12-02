@@ -53,7 +53,6 @@ df = pd.read_csv("gs://websitehumantrafficking/final_small_df.csv")
 
 col1, col2= st.columns(2)
 
-
 arrival_or_departure = col1.radio('Select country of', ('Origin', 'Destination'))
 
 
