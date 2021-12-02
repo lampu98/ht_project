@@ -26,4 +26,6 @@ You can view the website on this URL
 https://share.streamlit.io/lampu98/ht_project/app.py
 
 ## Description of files
-The main file is app.py where is stored the streamlit website
+1. We did web scraping to grab the data - inside ht_project folder you can see two important files --> index_urls.py where we took every url of the pages and scrape_page.py where we grap the data that we want from every url
+2. The main file is app.py where is stored the streamlit website --> inside the website you can see multiple interactive graphs, a prediction made with RandomForestClassifier and at the end some n-grams 
+
