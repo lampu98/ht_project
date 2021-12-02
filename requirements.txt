@@ -8,22 +8,18 @@ wheel>=0.29
 numpy
 pandas
 scikit-learn
-re
 
 # tests/linter
-black
-coverage
-flake8
+#black
+#coverage
+#flake8
 pytest
 yapf
 
 # API
 gcsfs
 google-cloud-storage
-mlflow
-s3fs
-fastapi
-uvicorn
+#uvicorn
 streamlit
 
 # utilities
@@ -33,7 +29,10 @@ memoized-property
 termcolor
 
 #scraping
-#selenium
+<<<<<<< HEAD
+selenium
+=======
+>>>>>>> master
 bs4
 chromedriver-binary==96.0.4664.45.0
 
@@ -44,5 +43,5 @@ spacy
 #data vis
 seaborn
 plotly
-wordcloud
+#wordcloud
 matplotlib
