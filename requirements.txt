@@ -29,10 +29,7 @@ memoized-property
 termcolor
 
 #scraping
-<<<<<<< HEAD
 selenium
-=======
->>>>>>> master
 bs4
 chromedriver-binary==96.0.4664.45.0
 
